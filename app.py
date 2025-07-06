@@ -1,45 +1,35 @@
-from flask import Flask, jsonify, render_template
-import sqlite3
-from db import init_db
+from flask import Flask, jsonify, request
+from scraper import scrape_domain
+from db import init_db, save_listings, get_listings
 
 app = Flask(__name__)
-DB = 'listings.db'
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return '<h1>Angela Cares Rentals 🏡</h1><ul>' + ''.join([
+        f'<li><a href="{l["link"]}" target="_blank">{l["address"]} – {l["price"]}</a></li>'
+        for l in get_listings()
+    ]) + '</ul>'
 
 @app.route('/api/listings')
 def api_listings():
-    conn = sqlite3.connect(DB)
-    c = conn.cursor()
-    c.execute("SELECT title, address, price, link, image FROM listings ORDER BY timestamp DESC")
-    rows = c.fetchall()
-    conn.close()
-    return jsonify([
-        {'title': r[0], 'address': r[1], 'price': r[2], 'link': r[3], 'image': r[4]}
-        for r in rows
-    ])
+    return jsonify(get_listings())
 
 @app.route('/run-scraper')
 def run_scraper():
-    from scrape import scrape
-    scrape()
-    return 'Scraper ran successfully.'
-
-from flask import request
+    listings = scrape_domain()
+    if listings:
+        save_listings(listings)
+        return 'Scraper ran successfully.'
+    return 'Scraper failed.'
 
 @app.route('/upload', methods=['POST'])
 def upload_listings():
     data = request.get_json()
     if not data or not isinstance(data, list):
         return 'Invalid data', 400
-
-    from db import init_db, save_listings
-    init_db()
     save_listings(data)
-    return 'Listings uploaded successfully', 200
-
+    return 'Listings uploaded successfully.', 200
 
 if __name__ == '__main__':
     init_db()
