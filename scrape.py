@@ -10,46 +10,58 @@ def scrape():
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
         'Accept-Language': 'en-US,en;q=0.9'
     }
-    r = requests.get(URL, headers=headers)
-    soup = BeautifulSoup(r.text, 'html.parser')
-    cards = soup.select('[data-testid="listing-card"]')
+    try:
+        r = requests.get(URL, headers=headers)
+        soup = BeautifulSoup(r.text, 'html.parser')
 
-    listings = []
+        # DEBUG: Print beginning of the HTML response
+        print("=== SCRAPER HTML START ===")
+        print(soup.prettify()[:1000])  # Print first 1000 characters only
+        print("=== SCRAPER HTML END ===")
 
-    for card in cards:
-        try:
-            a_tag = card.find('a', href=True)
-            if not a_tag:
+        cards = soup.select('[data-testid="listing-card"]')
+        print(f"Found {len(cards)} listing cards")
+
+        listings = []
+
+        for card in cards:
+            try:
+                a_tag = card.find('a', href=True)
+                if not a_tag:
+                    continue
+
+                link = 'https://www.realestate.com.au' + a_tag['href']
+                listing_id = link.split('/')[-1].split('?')[0]
+
+                title_tag = card.find('h2')
+                title = title_tag.text.strip() if title_tag else 'No title'
+
+                address_tag = card.find('span', {'data-testid': 'address'})
+                address = address_tag.text.strip() if address_tag else 'No address'
+
+                price_tag = card.find('span', {'data-testid': 'listing-card-price'})
+                price = price_tag.text.strip() if price_tag else 'No price'
+
+                img_tag = card.find('img')
+                image = img_tag['src'] if img_tag and img_tag.has_attr('src') else ''
+
+                listings.append({
+                    'id': listing_id,
+                    'title': title,
+                    'address': address,
+                    'price': price,
+                    'link': link,
+                    'image': image
+                })
+            except Exception as e:
+                print(f"Error parsing card: {e}")
                 continue
 
-            link = 'https://www.realestate.com.au' + a_tag['href']
-            listing_id = link.split('/')[-1].split('?')[0]
+        print(f"Parsed {len(listings)} valid listings")
+        save_listings(listings)
 
-            title_tag = card.find('h2')
-            title = title_tag.text.strip() if title_tag else 'No title'
-
-            address_tag = card.find('span', {'data-testid': 'address'})
-            address = address_tag.text.strip() if address_tag else 'No address'
-
-            price_tag = card.find('span', {'data-testid': 'listing-card-price'})
-            price = price_tag.text.strip() if price_tag else 'No price'
-
-            img_tag = card.find('img')
-            image = img_tag['src'] if img_tag and img_tag.has_attr('src') else ''
-
-            listings.append({
-                'id': listing_id,
-                'title': title,
-                'address': address,
-                'price': price,
-                'link': link,
-                'image': image
-            })
-        except Exception as e:
-            print(f"Error parsing card: {e}")
-            continue
-
-    save_listings(listings)
+    except Exception as e:
+        print(f"Scraper failed: {e}")
 
 if __name__ == '__main__':
     init_db()
