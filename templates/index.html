@@ -2,29 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Zetland Rentals</title>
+  <title>Angela Cares Rentals</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
-      padding: 0;
       font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to bottom, #f0f4f8, #dfe9f3);
+      background: linear-gradient(to bottom, #f0f4f8, #e4f0ec);
       color: #2c3e50;
     }
 
-    h1 {
-      text-align: center;
-      padding: 40px 0 20px;
-      font-size: 2.5em;
-      color: #1a1a1a;
-      margin: 0;
+    header {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 50px;
+    }
+
+    header h1 {
+      margin: 0 0 0 15px;
+      font-size: 24px;
+      color: #2e7d32;
     }
 
     .container {
       max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px 40px;
+      margin: 40px auto;
+      padding: 0 20px;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
@@ -75,7 +87,7 @@
       align-self: flex-start;
       padding: 8px 14px;
       text-decoration: none;
-      background-color: #0077c2;
+      background-color: #2e7d32;
       color: white;
       border-radius: 6px;
       font-size: 14px;
@@ -83,7 +95,7 @@
     }
 
     .card a:hover {
-      background-color: #005fa3;
+      background-color: #276327;
     }
 
     footer {
@@ -95,10 +107,11 @@
   </style>
 </head>
 <body>
-  <div style="text-align: center; padding: 20px;">
-  <img src="{{ url_for('static', filename='logo.png') }}" alt="Angela Cares Rentals" style="max-width: 300px; height: auto;">
-</div>
-  <h1>🏡 Zetland Rental Listings</h1>
+  <header>
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Angela Cares Rentals" />
+    <h1>Angela Cares Rentals</h1>
+  </header>
+
   <div class="container">
     {% for listing in listings %}
     <div class="card">
@@ -114,6 +127,7 @@
     </div>
     {% endfor %}
   </div>
+
   <footer>Angela Cares Rentals © {{ year or "2025" }}</footer>
 </body>
 </html>
