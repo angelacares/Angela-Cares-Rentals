@@ -11,6 +11,14 @@
         <div style="border:1px solid #ccc; padding:10px; margin:10px; max-width:500px;">
             <img src="{{ listing.image }}" alt="Listing Image"
                  style="width:100%; height:auto; max-height:200px; object-fit:cover;" />
+
+            {% if listing.video %}
+            <iframe width="100%" height="200" 
+                    src="{{ listing.video }}" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            {% endif %}
+
             <h3>{{ listing.title }}</h3>
             <p><strong>Address:</strong> {{ listing.address }}</p>
             <p><strong>Price:</strong> {{ listing.price }}</p>
