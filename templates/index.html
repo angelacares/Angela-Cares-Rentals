@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Zetland Rentals</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; display: flex; gap: 10px; }
+    img { width: 120px; height: auto; }
+  </style>
+</head>
+<body>
+  <h1>📍 Zetland Rental Listings</h1>
+  <div id="listings">Loading...</div>
+
+  <script>
+    async function loadListings() {
+      const res = await fetch('/api/listings');
+      const listings = await res.json();
+      const container = document.getElementById('listings');
+      container.innerHTML = '';
+      listings.forEach(l => {
+        container.innerHTML += `
+          <div class="card">
+            <img src="${l.image}" alt="listing image">
+            <div>
+              <h3>${l.address}</h3>
+              <p>${l.price}</p>
+              <a href="${l.link}" target="_blank">View Listing</a>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    loadListings();
+    setInterval(loadListings, 300000); // 5 min refresh
+  </script>
+</body>
+</html>
