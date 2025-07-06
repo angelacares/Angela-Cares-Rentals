@@ -1,0 +1,26 @@
+[
+    {
+        "id": "man-001",
+        "title": "Modern Studio in Zetland",
+        "address": "18 Ebsworth St, Zetland NSW 2017",
+        "price": "$650 per week",
+        "link": "https://example.com/listing-1",
+        "image": "https://via.placeholder.com/400x300.png?text=Zetland+Studio"
+    },
+    {
+        "id": "man-002",
+        "title": "2BR Apartment with Balcony",
+        "address": "15 Gadigal Ave, Zetland NSW 2017",
+        "price": "$950 per week",
+        "link": "https://example.com/listing-2",
+        "image": "https://via.placeholder.com/400x300.png?text=Zetland+2BR"
+    },
+    {
+        "id": "man-003",
+        "title": "Luxury 3BR Townhouse",
+        "address": "101 Joynton Ave, Zetland NSW 2017",
+        "price": "$1250 per week",
+        "link": "https://example.com/listing-3",
+        "image": "https://via.placeholder.com/400x300.png?text=Zetland+3BR"
+    }
+]
