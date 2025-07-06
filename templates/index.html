@@ -1,33 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Zetland Rentals</title>
     <meta charset="UTF-8">
+    <title>Zetland Rentals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 16px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .card p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .card a {
+            margin-top: 12px;
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #3498db;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .card a:hover {
+            background: #2980b9;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
-    <h1>🛏️ Zetland Rentals</h1>
-    <h1>✅ TESTING VERSION</h1>
-    {% if listings %}
+    <h1>🏡 Zetland Rentals</h1>
+    <div class="container">
         {% for listing in listings %}
-        <div style="border:1px solid #ccc; padding:10px; margin:10px; max-width:500px;">
-            <img src="{{ listing.image }}" alt="Listing Image"
-                 style="width:100%; height:auto; max-height:200px; object-fit:cover;" />
-
-            {% if listing.video %}
-            <iframe width="100%" height="200" 
-                    src="{{ listing.video }}" 
-                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
+        <div class="card">
+            {% if listing.image %}
+            <img src="{{ listing.image }}" alt="Listing image">
             {% endif %}
-
-            <h3>{{ listing.title }}</h3>
-            <p><strong>Address:</strong> {{ listing.address }}</p>
-            <p><strong>Price:</strong> {{ listing.price }}</p>
-            <a href="{{ listing.link }}" target="_blank">View Listing</a>
+            <div class="card-content">
+                <h3>{{ listing.title }}</h3>
+                <p><strong>📍 Address:</strong> {{ listing.address }}</p>
+                <p><strong>💰 Price:</strong> {{ listing.price }}</p>
+                <a href="{{ listing.link }}" target="_blank">View Listing</a>
+            </div>
         </div>
         {% endfor %}
-    {% else %}
-        <p>No listings found.</p>
-    {% endif %}
+    </div>
+    <footer>Angela Cares Rentals © 2025</footer>
 </body>
 </html>
