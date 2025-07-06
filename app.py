@@ -31,6 +31,14 @@ def upload_listings():
     save_listings(data)
     return 'Listings uploaded successfully.', 200
 
+@app.route('/debug')
+def debug_file():
+    try:
+        with open("debug.html", "r", encoding="utf-8") as f:
+            return f.read(), 200, {'Content-Type': 'text/html'}
+    except FileNotFoundError:
+        return "debug.html not found", 404
+
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000)
