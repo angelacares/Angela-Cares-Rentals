@@ -2,6 +2,7 @@
 import requests
 from bs4 import BeautifulSoup
 from db import init_db, save_listings
+import sys
 
 URL = 'https://www.realestate.com.au/rent/in-zetland,+nsw+2017/list-1'
 
@@ -14,13 +15,14 @@ def scrape():
         r = requests.get(URL, headers=headers)
         soup = BeautifulSoup(r.text, 'html.parser')
 
-        # DEBUG: Print beginning of the HTML response
-        print("=== SCRAPER HTML START ===")
-        print(soup.prettify()[:1000])  # Print first 1000 characters only
-        print("=== SCRAPER HTML END ===")
+        # DEBUG OUTPUT
+        print("=== SCRAPER HTML START ===", flush=True)
+        html_preview = soup.prettify()[:1000]
+        print(html_preview, flush=True)
+        print("=== SCRAPER HTML END ===", flush=True)
 
-        cards = soup.select('[data-testid="listing-card"]')
-        print(f"Found {len(cards)} listing cards")
+        cards = soup.select('[data-testid=\"listing-card\"]')
+        print(f"Found {len(cards)} listing cards", flush=True)
 
         listings = []
 
@@ -54,14 +56,14 @@ def scrape():
                     'image': image
                 })
             except Exception as e:
-                print(f"Error parsing card: {e}")
+                print(f"Error parsing card: {e}", flush=True)
                 continue
 
-        print(f"Parsed {len(listings)} valid listings")
+        print(f"Parsed {len(listings)} valid listings", flush=True)
         save_listings(listings)
 
     except Exception as e:
-        print(f"Scraper failed: {e}")
+        print(f"Scraper failed: {e}", flush=True)
 
 if __name__ == '__main__':
     init_db()
