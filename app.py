@@ -21,6 +21,12 @@ def api_listings():
         for r in rows
     ])
 
+@app.route('/run-scraper')
+def run_scraper():
+    from scrape import scrape
+    scrape()
+    return 'Scraper ran successfully.'
+
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000)
