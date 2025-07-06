@@ -1,39 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Zetland Rentals</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    .card { border: 1px solid #ccc; padding: 10px; margin: 10px 0; display: flex; gap: 10px; }
-    img { width: 120px; height: auto; }
-  </style>
+    <title>Zetland Rentals</title>
+    <meta charset="UTF-8">
 </head>
 <body>
-  <h1>📍 Zetland Rental Listings</h1>
-  <div id="listings">Loading...</div>
-
-  <script>
-    async function loadListings() {
-      const res = await fetch('/api/listings');
-      const listings = await res.json();
-      const container = document.getElementById('listings');
-      container.innerHTML = '';
-      listings.forEach(l => {
-        container.innerHTML += `
-          <div class="card">
-            <img src="${l.image}" alt="listing image">
-            <div>
-              <h3>${l.address}</h3>
-              <p>${l.price}</p>
-              <a href="${l.link}" target="_blank">View Listing</a>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    loadListings();
-    setInterval(loadListings, 300000); // 5 min refresh
-  </script>
+    <h1>🛏️ Zetland Rentals</h1>
+    {% if listings %}
+        {% for listing in listings %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px; max-width:500px;">
+            <img src="{{ listing.image }}" alt="Listing Image"
+                 style="width:100%; height:auto; max-height:200px; object-fit:cover;" />
+            <h3>{{ listing.title }}</h3>
+            <p><strong>Address:</strong> {{ listing.address }}</p>
+            <p><strong>Price:</strong> {{ listing.price }}</p>
+            <a href="{{ listing.link }}" target="_blank">View Listing</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No listings found.</p>
+    {% endif %}
 </body>
 </html>
