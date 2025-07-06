@@ -95,6 +95,9 @@
   </style>
 </head>
 <body>
+  <div style="text-align: center; padding: 20px;">
+  <img src="{{ url_for('static', filename='logo.png') }}" alt="Angela Cares Rentals" style="max-width: 300px; height: auto;">
+</div>
   <h1>🏡 Zetland Rental Listings</h1>
   <div class="container">
     {% for listing in listings %}
