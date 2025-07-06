@@ -1,99 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Zetland Rentals</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            padding: 40px;
-            margin: 0;
-        }
+  <meta charset="UTF-8" />
+  <title>Zetland Rentals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(to bottom, #f0f4f8, #dfe9f3);
+      color: #2c3e50;
+    }
 
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
+    h1 {
+      text-align: center;
+      padding: 40px 0 20px;
+      font-size: 2.5em;
+      color: #1a1a1a;
+      margin: 0;
+    }
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
 
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            width: 300px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s;
+    }
 
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+    .card:hover {
+      transform: translateY(-4px);
+    }
 
-        .card-content {
-            padding: 16px;
-        }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background-color: #eee;
+    }
 
-        .card h3 {
-            margin: 0 0 10px;
-            color: #333;
-            font-size: 18px;
-        }
+    .card-content {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        .card p {
-            margin: 5px 0;
-            color: #555;
-        }
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+      color: #2c3e50;
+    }
 
-        .card a {
-            margin-top: 12px;
-            display: inline-block;
-            text-decoration: none;
-            color: white;
-            background: #3498db;
-            padding: 8px 12px;
-            border-radius: 6px;
-            text-align: center;
-        }
+    .card p {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+    }
 
-        .card a:hover {
-            background: #2980b9;
-        }
+    .card a {
+      margin-top: auto;
+      align-self: flex-start;
+      padding: 8px 14px;
+      text-decoration: none;
+      background-color: #0077c2;
+      color: white;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: background 0.3s ease;
+    }
 
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #aaa;
-        }
-    </style>
+    .card a:hover {
+      background-color: #005fa3;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #999;
+      font-size: 13px;
+    }
+  </style>
 </head>
 <body>
-    <h1>🏡 Zetland Rentals</h1>
-    <div class="container">
-        {% for listing in listings %}
-        <div class="card">
-            {% if listing.image %}
-            <img src="{{ listing.image }}" alt="Listing image">
-            {% endif %}
-            <div class="card-content">
-                <h3>{{ listing.title }}</h3>
-                <p><strong>📍 Address:</strong> {{ listing.address }}</p>
-                <p><strong>💰 Price:</strong> {{ listing.price }}</p>
-                <a href="{{ listing.link }}" target="_blank">View Listing</a>
-            </div>
-        </div>
-        {% endfor %}
+  <h1>🏡 Zetland Rental Listings</h1>
+  <div class="container">
+    {% for listing in listings %}
+    <div class="card">
+      {% if listing.image %}
+      <img src="{{ listing.image }}" alt="Listing Image" />
+      {% endif %}
+      <div class="card-content">
+        <h3>{{ listing.title }}</h3>
+        <p><strong>📍</strong> {{ listing.address }}</p>
+        <p><strong>💰</strong> {{ listing.price }}</p>
+        <a href="{{ listing.link }}" target="_blank">View Listing</a>
+      </div>
     </div>
-    <footer>Angela Cares Rentals © 2025</footer>
+    {% endfor %}
+  </div>
+  <footer>Angela Cares Rentals © {{ year or "2025" }}</footer>
 </body>
 </html>
