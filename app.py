@@ -27,6 +27,20 @@ def run_scraper():
     scrape()
     return 'Scraper ran successfully.'
 
+from flask import request
+
+@app.route('/upload', methods=['POST'])
+def upload_listings():
+    data = request.get_json()
+    if not data or not isinstance(data, list):
+        return 'Invalid data', 400
+
+    from db import init_db, save_listings
+    init_db()
+    save_listings(data)
+    return 'Listings uploaded successfully', 200
+
+
 if __name__ == '__main__':
     init_db()
     app.run(host='0.0.0.0', port=5000)
