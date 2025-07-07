@@ -1,133 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
   <title>Angela Cares Rentals</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: linear-gradient(to bottom, #f0f4f8, #e4f0ec);
-      color: #2c3e50;
+      font-family: Arial, sans-serif;
+      background: #f7fdf9;
+      padding: 2rem;
     }
-
-    header {
-      display: flex;
-      align-items: center;
-      padding: 10px 20px;
-      background-color: #ffffff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    .listing {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      background: white;
+      border-radius: 10px;
     }
-
-    header img {
-      height: 50px;
-    }
-
-    header h1 {
-      margin: 0 0 0 15px;
-      font-size: 24px;
-      color: #2e7d32;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 12px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      background-color: #eee;
-    }
-
-    .card-content {
-      padding: 16px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .card h3 {
-      margin: 0;
-      font-size: 18px;
-      color: #2c3e50;
-    }
-
-    .card p {
-      margin: 0;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .card a {
-      margin-top: auto;
-      align-self: flex-start;
-      padding: 8px 14px;
-      text-decoration: none;
-      background-color: #2e7d32;
-      color: white;
+    img {
+      max-width: 100%;
+      height: auto;
       border-radius: 6px;
-      font-size: 14px;
-      transition: background 0.3s ease;
     }
-
-    .card a:hover {
-      background-color: #276327;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #999;
-      font-size: 13px;
+    video {
+      width: 100%;
+      margin-top: 10px;
+      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="{{ url_for('static', filename='logo.png') }}" alt="Angela Cares Rentals" />
-    <h1>Angela Cares Rentals</h1>
-  </header>
-
-  <div class="container">
-    {% for listing in listings %}
-    <div class="card">
+  <h1>Angela Cares Rentals</h1>
+  {% for listing in listings %}
+    <div class="listing">
+      <h2>{{ listing.title }}</h2>
+      <p><strong>Address:</strong> {{ listing.address }}</p>
+      <p><strong>Price:</strong> {{ listing.price }}</p>
+      <a href="{{ listing.link }}" target="_blank">View Listing</a><br><br>
       {% if listing.image %}
-      <img src="{{ listing.image }}" alt="Listing Image" />
+        <img src="{{ listing.image }}" alt="Property image" />
       {% endif %}
-      <div class="card-content">
-        <h3>{{ listing.title }}</h3>
-        <p><strong>📍</strong> {{ listing.address }}</p>
-        <p><strong>💰</strong> {{ listing.price }}</p>
-        <a href="{{ listing.link }}" target="_blank">View Listing</a>
-      </div>
+      {% if listing.video %}
+        <video controls>
+          <source src="{{ listing.video }}" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      {% endif %}
     </div>
-    {% endfor %}
-  </div>
-
-  <footer>Angela Cares Rentals © {{ year or "2025" }}</footer>
+  {% endfor %}
 </body>
 </html>
