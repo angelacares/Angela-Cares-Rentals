@@ -5,46 +5,73 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f7fdf9;
+      background: #f4fff6;
       padding: 2rem;
+      margin: 0;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      background-color: #dff5e3;
+      border-bottom: 2px solid #a0d6a0;
+    }
+    header img {
+      height: 60px;
+      margin-right: 15px;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      color: #2e7d32;
+      margin: 0;
     }
     .listing {
-      border: 1px solid #ddd;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
+      border: 1px solid #ccc;
       background: white;
-      border-radius: 10px;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-    img {
-      max-width: 100%;
+    img.property {
+      width: 100%;
       height: auto;
-      border-radius: 6px;
+      border-radius: 8px;
+      margin-top: 10px;
     }
     video {
       width: 100%;
+      border-radius: 8px;
       margin-top: 10px;
-      border-radius: 6px;
     }
   </style>
 </head>
 <body>
-  <h1>Angela Cares Rentals</h1>
-  {% for listing in listings %}
-    <div class="listing">
-      <h2>{{ listing.title }}</h2>
-      <p><strong>Address:</strong> {{ listing.address }}</p>
-      <p><strong>Price:</strong> {{ listing.price }}</p>
-      <a href="{{ listing.link }}" target="_blank">View Listing</a><br><br>
-      {% if listing.image %}
-        <img src="{{ listing.image }}" alt="Property image" />
-      {% endif %}
-      {% if listing.video %}
-        <video controls>
-          <source src="{{ listing.video }}" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      {% endif %}
-    </div>
-  {% endfor %}
+  <header>
+    <img src="/static/logo.png" alt="Logo">
+    <h1>Angela Cares Rentals</h1>
+  </header>
+
+  <div class="content">
+    {% for listing in listings %}
+      <div class="listing">
+        <h2>{{ listing.title }}</h2>
+        <p><strong>Address:</strong> {{ listing.address }}</p>
+        <p><strong>Price:</strong> {{ listing.price }}</p>
+        <a href="{{ listing.link }}" target="_blank">View Listing</a>
+
+        {% if listing.image %}
+          <img class="property" src="{{ listing.image }}" alt="Property image">
+        {% endif %}
+
+        {% if listing.video %}
+          <video controls>
+            <source src="{{ listing.video }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
 </body>
 </html>
