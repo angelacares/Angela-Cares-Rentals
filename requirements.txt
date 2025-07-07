@@ -3,3 +3,4 @@ requests
 beautifulsoup4
 tinydb
 boto3
+python-dotenv
