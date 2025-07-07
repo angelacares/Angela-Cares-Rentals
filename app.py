@@ -1,22 +1,25 @@
 from flask import Flask, render_template, request, redirect, url_for
 from werkzeug.utils import secure_filename
-import json
+from tinydb import TinyDB, Query
 import os
 
-
-
-
-
 app = Flask(__name__)
-
-LISTINGS_FILE = "listings.json"
 UPLOAD_FOLDER = os.path.join("static", "videos")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+db = TinyDB('db.json')
+listings_table = db.table('listings')
+
+def load_listings():
+    return listings_table.all()
+
+def save_listings(listings):
+    listings_table.truncate()
+    listings_table.insert_multiple(listings)
+
 @app.route('/')
 def index():
-    with open(LISTINGS_FILE, 'r') as f:
-        listings = json.load(f)
+    listings = load_listings()
     return render_template('index.html', listings=listings)
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -39,16 +42,9 @@ def admin():
             "video": video_path
         }
 
-        if os.path.exists(LISTINGS_FILE):
-            with open(LISTINGS_FILE, 'r') as f:
-                listings = json.load(f)
-        else:
-            listings = []
-
+        listings = load_listings()
         listings.insert(0, new_listing)
-
-        with open(LISTINGS_FILE, 'w') as f:
-            json.dump(listings, f, indent=2)
+        save_listings(listings)
 
         return redirect(url_for('index'))
 
