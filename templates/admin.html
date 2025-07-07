@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Listing - Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background-color: #f4f6f8;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2e7d32;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #2e7d32;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #256429;
+    }
+  </style>
+</head>
+<body>
+  <h2>Add New Rental Listing</h2>
+  <form method="POST">
+    <input type="text" name="title" placeholder="Listing Title" required />
+    <input type="text" name="address" placeholder="Address" required />
+    <input type="text" name="price" placeholder="Price" required />
+    <input type="url" name="link" placeholder="Listing URL" required />
+    <input type="url" name="image" placeholder="Image URL" />
+    <button type="submit">Add Listing</button>
+  </form>
+</body>
+</html>
